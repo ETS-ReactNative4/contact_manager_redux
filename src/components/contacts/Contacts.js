@@ -1,30 +1,9 @@
 import React, { Component } from 'react';
 import Contact from './Contact';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Contacts extends Component {
-  state = {
-    contacts: [
-      {
-        id: 1,
-        name: 'John Doe',
-        email: 'john@gmail.com',
-        phone: '555-555-5555'
-      },
-      {
-        id: 2,
-        name: 'Karen Williams',
-        email: 'karen@gmail.com',
-        phone: '444-444-4444'
-      },
-      {
-        id: 3,
-        name: 'Henry Johnson',
-        email: 'henry@gmail.com',
-        phone: '333-333-333'
-      }
-    ]
-  };
-
   render() {
     const { contacts } = this.state;
     return (
@@ -40,4 +19,18 @@ class Contacts extends Component {
   }
 }
 
-export default Contacts;
+const mapStateToProps = function(state){
+  {contacts: state.contact.contacts}
+};
+
+const mapDispatchToProps = function(dispatch){
+  {
+    getContacts: function(){
+      dispatch({type: GET_CONTACTS})
+    }
+  }
+}
+// connect takes anything we want:
+// 1. mapped from Redux state to props in the component (function)
+// 2. anything (actions) we want dispatched
+export default connect()(Contacts);
